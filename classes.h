@@ -3,6 +3,16 @@
 
 #include <iostream>
 #include <armadillo>
+
+/*
+Задача: сделать ромбовидное наследование (diamond of death) для классов: А - главный родительский класс,
+В, C - потомки А, класс D - наследует B и C так, что поля класса А должны быть в единственном экземпляре.
+
+Класс D предполагается использовать внутри контейнеров std::vector, std::map.
+
+Поля всех классов "ромба" - int, double, arma::mat, какие-либо указатели отсутствуют.
+
+*/
 //----------------------------------------------------------------------------------------------------------------------
 template<size_t SizeX, size_t SizeY>
 class A
@@ -20,7 +30,7 @@ public:
         this->MatrixA = other.MatrixA;
     }
 
-    A& operator=( A other ) // Да, именно так, без &
+    A& operator=( A other ) // Да, именно так, без &: https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
     {
         std::cout << "copy assignment A" << std::endl;        
         swap( *this, other );
@@ -40,6 +50,8 @@ public:
         swap( *this, other );
         return *this;
     }
+
+    ~A() = default;
 
     friend void swap( A<SizeX, SizeY> &lhs, A<SizeX, SizeY> &rhs ) noexcept
     {
@@ -94,6 +106,8 @@ public:
         swap( *this, other );
         return *this;
     }
+
+    ~B() = default;
 
     friend void swap( B<SizeX, SizeY> &lhs, B<SizeX, SizeY> &rhs )
     {
@@ -150,6 +164,8 @@ public:
         return *this;
     }
 
+    ~C() = default;
+
     friend void swap( C<SizeX, SizeY> &lhs, C<SizeX, SizeY> &rhs ) noexcept
     {
         std::cout << "swap C" << std::endl;
@@ -205,6 +221,8 @@ public:
         swap( *this, other );
         return *this;
     }
+
+    ~D() = default;
 
     friend void swap( D<SizeX, SizeY> &lhs, D<SizeX, SizeY> &rhs ) noexcept
     {

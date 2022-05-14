@@ -13,7 +13,7 @@ int main()
                      { 9, 10, 11 } };
 
     //------------------------------------------------------------------------------------------------------------------
-    std::cout << "\n test 1 - Without romb \n" << std::endl;
+    std::cout << "\n test 1 - Without rhomb \n" << std::endl;
 
     B<2, 3> instanceB1;
     instanceB1.IntegerA = 1;
@@ -33,7 +33,7 @@ int main()
     instanceB2.MatrixA.print( "B2.MatrixA after:" );
 
     //------------------------------------------------------------------------------------------------------------------
-    std::cout << "\n test 2 - With romb \n" << std::endl;
+    std::cout << "\n test 2 - With rhomb \n" << std::endl;
 
     D<2,3> instanceD1;
     instanceD1.IntegerA = 1;
@@ -52,7 +52,7 @@ int main()
     instanceD2.MatrixA.print( "D2.MatrixA after:" );
 
     //------------------------------------------------------------------------------------------------------------------
-    std::cout << "\n test 3 - With romb, with map \n" << std::endl;
+    std::cout << "\n test 3 - With rhomb, with map \n" << std::endl;
 
     instanceD1.IntegerA = 1;
     instanceD1.MatrixA = M1;
