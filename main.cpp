@@ -101,7 +101,7 @@ int main()
         v.MatrixA.print();
     }
 
-    myVec.erase( myVec.begin() ); // FAIL - classes.h line 218
+    myVec.erase( myVec.begin() ); // OK
 
     for( auto &v : myVec ) {
         v.MatrixA.print();

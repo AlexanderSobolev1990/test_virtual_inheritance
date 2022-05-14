@@ -30,10 +30,19 @@ public:
         this->MatrixA = other.MatrixA;
     }
 
-    A& operator=( A other ) // Да, именно так, без &: https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
+//    A& operator=( A other ) // Да, именно так, без &: https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
+//    {
+//        std::cout << "copy assignment A" << std::endl;
+//        swap( *this, other );
+//        return *this;
+//    }
+
+    // см ответ с ответ с https://stackoverflow.com/questions/70247395/ambiguous-overload-for-operator-when-trying-to-invoke-the-move-assignment-ope
+    A& operator=( const A &other ) // c &
     {
-        std::cout << "copy assignment A" << std::endl;        
-        swap( *this, other );
+        std::cout << "copy assignment A" << std::endl;
+        A copy( other );
+        swap( *this, copy );
         return *this;
     }
 
@@ -86,10 +95,18 @@ public:
         this->MatrixB = other.MatrixB;
     }
 
-    B& operator=( B other ) // Да, именно так, без &
+//    B& operator=( B other ) // Да, именно так, без &
+//    {
+//        std::cout << "copy assignment B" << std::endl;
+//        swap( *this, other );
+//        return *this;
+//    }
+
+    B& operator=( const B &other ) // c &
     {
-        std::cout << "copy assignment B" << std::endl;        
-        swap( *this, other );
+        std::cout << "copy assignment B" << std::endl;
+        B copy( other );
+        swap( *this, copy );
         return *this;
     }
 
@@ -143,10 +160,18 @@ public:
         this->MatrixC = other.MatrixC;
     }
 
-    C& operator=( C other ) // Да, именно так, без &
+//    C& operator=( C other ) // Да, именно так, без &
+//    {
+//        std::cout << "copy assignment C" << std::endl;
+//        swap( *this, other );
+//        return *this;
+//    }
+
+    C& operator=( const C &other ) // c &
     {
-        std::cout << "copy assignment C" << std::endl;        
-        swap( *this, other );
+        std::cout << "copy assignment C" << std::endl;
+        C copy( other );
+        swap( *this, copy );
         return *this;
     }
 
@@ -201,10 +226,18 @@ public:
         this->MatrixD = other.MatrixD;
     }
 
-    D& operator=( D other ) // Да, именно так, без &
+//    D& operator=( D other ) // Да, именно так, без &
+//    {
+//        std::cout << "copy assignment D" << std::endl;
+//        swap( *this, other );
+//        return *this;
+//    }
+
+    D& operator=( const D &other ) // c &
     {
-        std::cout << "copy assignment D" << std::endl;        
-        swap( *this, other );
+        std::cout << "copy assignment D" << std::endl;
+        D copy( other );
+        swap( *this, copy );
         return *this;
     }
 
@@ -215,12 +248,12 @@ public:
         swap( *this, other );
     }
 
-//    D& operator=( D &&other ) noexcept
-//    {
-//        std::cout << "move assignment D" << std::endl;
-//        swap( *this, other );
-//        return *this;
-//    }
+    D& operator=( D &&other ) noexcept
+    {
+        std::cout << "move assignment D" << std::endl;
+        swap( *this, other );
+        return *this;
+    }
 
     ~D() = default;
 
