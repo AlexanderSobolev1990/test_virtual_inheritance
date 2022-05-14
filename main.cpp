@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <vector>
 
 #include <classes.h>
 
@@ -52,7 +53,7 @@ int main()
     instanceD2.MatrixA.print( "D2.MatrixA after:" );
 
     //------------------------------------------------------------------------------------------------------------------
-    std::cout << "\n test 3 - With rhomb, with map \n" << std::endl;
+    std::cout << "\n test 3 - With rhomb, use std::map \n" << std::endl;
 
     instanceD1.IntegerA = 1;
     instanceD1.MatrixA = M1;
@@ -79,6 +80,31 @@ int main()
     for( auto &a : myMap ) { // new
         std::cout << ( a.first ) << std::endl;
         ( a.second ).MatrixA.print();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    std::cout << "\n test 4 - With rhomb, use std::vector \n" << std::endl;
+
+    instanceD1.IntegerA = 1;
+    instanceD1.MatrixA = M1;
+
+    instanceD2.IntegerA = 2;
+    instanceD2.MatrixA = M2;
+
+    std::vector< D<2, 3> > myVec;
+    myVec.push_back( instanceD1 );
+//    for( auto &v : myVec ) {
+//        v.MatrixA.print();
+//    }
+    myVec.push_back( instanceD2 );
+    for( auto &v : myVec ) {
+        v.MatrixA.print();
+    }
+
+    myVec.erase( myVec.begin() ); // FAIL - classes.h line 218
+
+    for( auto &v : myVec ) {
+        v.MatrixA.print();
     }
 
     return 0;

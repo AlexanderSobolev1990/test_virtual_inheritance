@@ -71,7 +71,7 @@ template<size_t SizeX, size_t SizeY>
 class B : virtual public A<SizeX, SizeY>
 {
 public:
-//    using A<SizeX, SizeY>::A;
+    using A<SizeX, SizeY>::A;
 
     B() : A<SizeX, SizeY>(),
         IntegerB( 0 ), MatrixB( arma::zeros( SizeX, SizeY ) )
@@ -128,7 +128,7 @@ template<size_t SizeX, size_t SizeY>
 class C : virtual public A<SizeX, SizeY>
 {
 public:
-//    using A<SizeX, SizeY>::A;
+    using A<SizeX, SizeY>::A;
 
     C() : A<SizeX, SizeY>(),
         IntegerC( 0 ), MatrixC( arma::zeros( SizeX, SizeY ) )
@@ -185,8 +185,8 @@ template<size_t SizeX, size_t SizeY>
 class D : public B<SizeX, SizeY>, public C<SizeX, SizeY>
 {
 public:
-//    using B<SizeX, SizeY>::B;
-//    using C<SizeX, SizeY>::C;
+    using B<SizeX, SizeY>::B;
+    using C<SizeX, SizeY>::C;
 
     D() : B<SizeX, SizeY>(), C<SizeX, SizeY>(),
         IntegerD( 0 ), MatrixD( arma::zeros( SizeX, SizeY ) )
@@ -215,12 +215,12 @@ public:
         swap( *this, other );
     }
 
-    D& operator=( D &&other ) noexcept
-    {
-        std::cout << "move assignment D" << std::endl;
-        swap( *this, other );
-        return *this;
-    }
+//    D& operator=( D &&other ) noexcept
+//    {
+//        std::cout << "move assignment D" << std::endl;
+//        swap( *this, other );
+//        return *this;
+//    }
 
     ~D() = default;
 
