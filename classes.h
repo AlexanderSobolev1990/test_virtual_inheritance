@@ -60,7 +60,10 @@ public:
         return *this;
     }
 
-    ~A() = default;
+    virtual ~A()
+    {
+        std::cout << "destructor A" << std::endl;
+    }
 
     friend void swap( A<SizeX, SizeY> &lhs, A<SizeX, SizeY> &rhs ) noexcept
     {
@@ -124,7 +127,10 @@ public:
         return *this;
     }
 
-    ~B() = default;
+    virtual ~B()
+    {
+        std::cout << "destructor B" << std::endl;
+    }
 
     friend void swap( B<SizeX, SizeY> &lhs, B<SizeX, SizeY> &rhs )
     {
@@ -189,7 +195,10 @@ public:
         return *this;
     }
 
-    ~C() = default;
+    virtual ~C()
+    {
+        std::cout << "destructor C" << std::endl;
+    }
 
     friend void swap( C<SizeX, SizeY> &lhs, C<SizeX, SizeY> &rhs ) noexcept
     {
@@ -207,7 +216,7 @@ public:
 };
 //----------------------------------------------------------------------------------------------------------------------
 template<size_t SizeX, size_t SizeY>
-class D : public B<SizeX, SizeY>, public C<SizeX, SizeY>
+class D : public virtual B<SizeX, SizeY>, public virtual C<SizeX, SizeY>
 {
 public:
     using B<SizeX, SizeY>::B;
@@ -255,7 +264,10 @@ public:
         return *this;
     }
 
-    ~D() = default;
+    virtual ~D()
+    {
+        std::cout << "destructor D" << std::endl;
+    }
 
     friend void swap( D<SizeX, SizeY> &lhs, D<SizeX, SizeY> &rhs ) noexcept
     {
