@@ -44,8 +44,11 @@ int main()
     instanceD2.IntegerA = 2;
     instanceD2.MatrixA = M2;
 
+    D<2,3> instanceD3 = D<2,3>( instanceD2 );
+
     instanceD1.MatrixA.print( "D1.MatrixA before:" );
     instanceD2.MatrixA.print( "D2.MatrixA before:" );
+    instanceD3.MatrixA.print( "D3.MatrixA before:" );
 
     instanceD1 = instanceD2; // То, ради чего всё вот это вот делается
 

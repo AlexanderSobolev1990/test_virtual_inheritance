@@ -21,6 +21,7 @@ public:
     A() : IntegerA( 0 ), MatrixA( arma::zeros( SizeX, SizeY ) )
     {
         std::cout << "default constructor A" << std::endl;
+        MatrixA(0, 0) = 777;
     }
 
     A( const A &other )
@@ -135,7 +136,8 @@ public:
     friend void swap( B<SizeX, SizeY> &lhs, B<SizeX, SizeY> &rhs )
     {
         std::cout << "swap B" << std::endl;
-        swap( static_cast<A<SizeX, SizeY>&>( lhs ), static_cast<A<SizeX, SizeY>&>( rhs ) ); // Свап предка 1 порядка
+//        swap( static_cast<A<SizeX, SizeY>&>( lhs ), static_cast<A<SizeX, SizeY>&>( rhs ) ); // Свап предка 1 порядка
+        swap( dynamic_cast<A<SizeX, SizeY>&>( lhs ), dynamic_cast<A<SizeX, SizeY>&>( rhs ) ); // Свап предка 1 порядка
 
         // Свап полей класса
         std::swap( lhs.IntegerB, rhs.IntegerB );
@@ -203,7 +205,8 @@ public:
     friend void swap( C<SizeX, SizeY> &lhs, C<SizeX, SizeY> &rhs ) noexcept
     {
         std::cout << "swap C" << std::endl;
-        swap( static_cast< A<SizeX, SizeY> &>( lhs ), static_cast< A<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
+//        swap( static_cast< A<SizeX, SizeY> &>( lhs ), static_cast< A<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
+        swap( dynamic_cast< A<SizeX, SizeY> &>( lhs ), dynamic_cast< A<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
 
         // Свап полей класса
         std::swap( lhs.IntegerC, rhs.IntegerC );
@@ -216,7 +219,7 @@ public:
 };
 //----------------------------------------------------------------------------------------------------------------------
 template<size_t SizeX, size_t SizeY>
-class D : public virtual B<SizeX, SizeY>, public virtual C<SizeX, SizeY>
+class D : public B<SizeX, SizeY>, public C<SizeX, SizeY>
 {
 public:
     using B<SizeX, SizeY>::B;
@@ -228,7 +231,7 @@ public:
         std::cout << "default constructor D" << std::endl;
     }
 
-    D( const D &other ) : B<SizeX, SizeY>( other ), C<SizeX, SizeY>( other ), A<SizeX, SizeY>( other )
+    D( const D &other ) : A<SizeX, SizeY>( other ), B<SizeX, SizeY>( other ), C<SizeX, SizeY>( other )
     {
         std::cout << "copy constructor D" << std::endl;
         this->IntegerD = other.IntegerD;
@@ -272,9 +275,13 @@ public:
     friend void swap( D<SizeX, SizeY> &lhs, D<SizeX, SizeY> &rhs ) noexcept
     {
         std::cout << "swap D" << std::endl;
-        swap( static_cast< B<SizeX, SizeY> &>( lhs ), static_cast< B<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
-        swap( static_cast< C<SizeX, SizeY> &>( lhs ), static_cast< C<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
-        swap( static_cast< A<SizeX, SizeY> &>( lhs ), static_cast< A<SizeX, SizeY> &>( rhs ) ); // Свап предка 2 порядка
+//        swap( static_cast< A<SizeX, SizeY> &>( lhs ), static_cast< A<SizeX, SizeY> &>( rhs ) ); // Свап предка 2 порядка
+//        swap( static_cast< B<SizeX, SizeY> &>( lhs ), static_cast< B<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
+//        swap( static_cast< C<SizeX, SizeY> &>( lhs ), static_cast< C<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
+
+        swap( dynamic_cast< A<SizeX, SizeY> &>( lhs ), dynamic_cast< A<SizeX, SizeY> &>( rhs ) ); // Свап предка 2 порядка
+        swap( dynamic_cast< B<SizeX, SizeY> &>( lhs ), dynamic_cast< B<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
+        swap( dynamic_cast< C<SizeX, SizeY> &>( lhs ), dynamic_cast< C<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
 
         // Свап полей класса
         std::swap( lhs.IntegerD, rhs.IntegerD );
