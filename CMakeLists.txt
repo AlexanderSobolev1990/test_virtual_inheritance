@@ -1,22 +1,36 @@
-cmake_minimum_required(VERSION 3.5)
-
+cmake_minimum_required(VERSION 3.7)
 project(test_virtual_inheritance LANGUAGES CXX)
+message(STATUS "CMake version: ${CMAKE_VERSION}, Project: ${PROJECT_NAME}")
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(NOT CMAKE_BUILD_TYPE) # Если не указан тип сборки, собрать в режиме Release
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+message(WARNING "Build mode: ${CMAKE_BUILD_TYPE}")
 
-find_package(BLAS REQUIRED)
-find_package(Armadillo REQUIRED)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
 
-add_executable(test_virtual_inheritance
-    classes.h
-    main.cpp
-    )
+if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease") # Актуально для Linux
+    option(BUILD_DOCUMENTATION "Build project documentation (Requires Doxygen)" ON) # Опционально построение документации: ON|OFF
+endif()
 
-target_link_libraries(${PROJECT_NAME}
-    ${ARMADILLO_LIBRARIES}
-    )
-target_include_directories(${PROJECT_NAME}
-    PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}
-    )
+add_compile_options(
+    -Wall
+    "$<$<CONFIG:RELEASE>:-O3>"
+    "$<$<CONFIG:DEBUG>:-O0>"
+)
+
+add_subdirectory(classes)
+add_subdirectory(test)
+
+# Генерация документации
+if(BUILD_DOCUMENTATION)
+    find_package(Doxygen
+        REQUIRED dot) # dot - требуется Graphviz dot утилита для построения графиков в документации
+    if(DOXYGEN_FOUND)
+        add_subdirectory(doc) # В поддиректории проекта /doc должен быть CMakeLists.txt с настройками Doxygen
+    else()
+        message(WARNING "Doxygen need to be installed to generate the doxygen documentation")
+    endif()
+endif()
