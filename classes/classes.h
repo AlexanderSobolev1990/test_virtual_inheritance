@@ -101,14 +101,13 @@ public:
         return *this;
     }
 
-    B( B &&other ) : A<SizeX, SizeY>(),
-        IntegerB( 0 ), MatrixB( arma::zeros( SizeX, SizeY ) )
+    B( B &&other ) noexcept : A<SizeX, SizeY>(), IntegerB( 0 ), MatrixB( arma::zeros( SizeX, SizeY ) )
     {
         std::cout << "move constructor B" << std::endl;
         swap( *this, other );
     }
 
-    B& operator=( B &&other )
+    B& operator=( B &&other ) noexcept
     {
         std::cout << "move assignment B" << std::endl;
         swap( *this, other );
@@ -162,8 +161,7 @@ public:
         return *this;
     }
 
-    C( C &&other ) noexcept
-        : IntegerC( 0 ), MatrixC( arma::zeros( SizeX, SizeY ) )
+    C( C &&other ) noexcept : B<SizeX, SizeY>(), IntegerC( 0 ), MatrixC( arma::zeros( SizeX, SizeY ) )
     {
         std::cout << "move constructor C" << std::endl;
         swap( *this, other );
@@ -223,8 +221,7 @@ public:
         return *this;
     }
 
-    D( D &&other ) noexcept
-        : IntegerD( 0 ), MatrixD( arma::zeros( SizeX, SizeY ) )
+    D( D &&other ) noexcept : B<SizeX, SizeY>(), IntegerD( 0 ), MatrixD( arma::zeros( SizeX, SizeY ) )
     {
         std::cout << "move constructor D" << std::endl;
         swap( *this, other );
@@ -284,8 +281,7 @@ public:
         return *this;
     }
 
-    E( E &&other ) noexcept
-        : IntegerE( 0 ), MatrixE( arma::zeros( SizeX, SizeY ) )
+    E( E &&other ) noexcept : D<SizeX, SizeY>(), IntegerE( 0 ), MatrixE( arma::zeros( SizeX, SizeY ) )
     {
         std::cout << "move constructor E" << std::endl;
         swap( *this, other );
@@ -331,7 +327,8 @@ public:
         std::cout << "default constructor F" << std::endl;
     }
 
-    F( const F &other ) : B<SizeX, SizeY>( other ), C<SizeX, SizeY>( other ), E<SizeX, SizeY>( other )
+    F( const F &other ) :
+        B<SizeX, SizeY>( other ), C<SizeX, SizeY>( other ), E<SizeX, SizeY>( other )
     {
         std::cout << "copy constructor F" << std::endl;
         this->IntegerF = other.IntegerF;
@@ -346,8 +343,7 @@ public:
         return *this;
     }
 
-    F( F &&other ) noexcept
-        : IntegerF( 0 ), MatrixF( arma::zeros( SizeX, SizeY ) )
+    F( F &&other ) noexcept : C<SizeX, SizeY>(), E<SizeX, SizeY>(), IntegerF( 0 ), MatrixF( arma::zeros( SizeX, SizeY ) )
     {
         std::cout << "move constructor F" << std::endl;
         swap( *this, other );
@@ -369,7 +365,7 @@ public:
     {
         std::cout << "swap F" << std::endl;
         swap( dynamic_cast< B<SizeX, SizeY> &>( lhs ), dynamic_cast< B<SizeX, SizeY> &>( rhs ) ); // Свап предка 3 порядка
-//        swap( dynamic_cast< C<SizeX, SizeY> &>( lhs ), dynamic_cast< C<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
+        swap( dynamic_cast< C<SizeX, SizeY> &>( lhs ), dynamic_cast< C<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
         swap( dynamic_cast< E<SizeX, SizeY> &>( lhs ), dynamic_cast< E<SizeX, SizeY> &>( rhs ) ); // Свап предка 1 порядка
 
         // Свап полей класса
@@ -394,7 +390,7 @@ public:
         std::cout << "default constructor G" << std::endl;
     }
 
-    G( const G &other ) : F<SizeX, SizeY>( other )
+    G( const G &other ) : B<SizeX, SizeY>( other ), F<SizeX, SizeY>( other )
     {
         std::cout << "copy constructor G" << std::endl;
         this->IntegerG = other.IntegerG;
@@ -409,14 +405,13 @@ public:
         return *this;
     }
 
-    G( G &&other ) : F<SizeX, SizeY>(),
-        IntegerG( 0 ), MatrixG( arma::zeros( SizeX, SizeY ) )
+    G( G &&other ) noexcept : F<SizeX, SizeY>(), IntegerG( 0 ), MatrixG( arma::zeros( SizeX, SizeY ) )
     {
         std::cout << "move constructor G" << std::endl;
         swap( *this, other );
     }
 
-    G& operator=( G &&other )
+    G& operator=( G &&other ) noexcept
     {
         std::cout << "move assignment G" << std::endl;
         swap( *this, other );
