@@ -6,6 +6,8 @@ set(DOXYGEN_INPUT_DIRECTORY # Откуда брать исходники для 
 )
 set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) # Куда положить сгенерированную документацию
 
+set(DOXYGEN_IMAGE_PATH ${SOLUTION_DIR}/doc)
+
 set(DOXYGEN_DOXYFILE_ENCODING UTF-8)
 set(DOXYGEN_OUTPUT_LANGUAGE RUSSIAN)
 set(DOXYGEN_PROJECT_NAME "Виртуальное ромбовидное наследование")

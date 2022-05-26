@@ -24,6 +24,8 @@ arma::mat M1 = { { 1, 2, 3 },
                  { 4, 5, 6 } };
 arma::mat M2 = { {  7,  8,  9 },
                  { 10, 11, 12 } };
+arma::mat M3 = { { 13, 14, 15 },
+                 { 16, 17, 18 } };
 arma::mat Mzeros = arma::zeros( dimX, dimY );
 
 const double eps = 1.0e-6;
@@ -154,18 +156,67 @@ BOOST_AUTO_TEST_CASE( test_6 )
     instanceG2.IntegerA = 2;
     instanceG2.MatrixA = M2;
 
+    G<dimX, dimY> instanceG3;
+    instanceG3.IntegerA = 3;
+    instanceG3.MatrixA = M3;
+
     instanceG1.MatrixA.print( "G1.MatrixA before:" );
     instanceG2.MatrixA.print( "G2.MatrixA before:" );
+    instanceG3.MatrixA.print( "G3.MatrixA before:" );
 
     std::vector< G<dimX, dimY> > myVec;
     myVec.push_back( instanceG1 );
     myVec.push_back( instanceG2 );
-    myVec.erase( myVec.begin() );
-
-    for( auto &v : myVec ) {
-        v.MatrixA.print();
+    myVec.push_back( instanceG3 );
+//    myVec.erase( myVec.begin() );
+    for( auto it = myVec.begin(); it != myVec.end(); ) {
+        if( ( *it ).IntegerA == 2 ) {
+            it = myVec.erase( it );
+        } else {
+            ++it;
+        }
     }
 
-    instanceG1.MatrixA.print( "G1.MatrixA after:" );
-    instanceG2.MatrixA.print( "G2.MatrixA after:" );
+    for( auto &v : myVec ) {
+        std::cout << "MatrixA" << std::endl;
+        v.MatrixA.print();
+    }
+}
+
+BOOST_AUTO_TEST_CASE( test_7 )
+{
+    std::cout << "\ntest_7" << std::endl;
+    A<dimX, dimY> instanceA1;
+    instanceA1.IntegerA = 1;
+    instanceA1.MatrixA = M1;
+
+    A<dimX, dimY> instanceA2;
+    instanceA2.IntegerA = 2;
+    instanceA2.MatrixA = M2;
+
+    A<dimX, dimY> instanceA3;
+    instanceA3.IntegerA = 3;
+    instanceA3.MatrixA = M3;
+
+    instanceA1.MatrixA.print( "A1.MatrixA before:" );
+    instanceA2.MatrixA.print( "A2.MatrixA before:" );
+    instanceA3.MatrixA.print( "A3.MatrixA before:" );
+
+    std::vector< A<dimX, dimY> > myVec;
+    myVec.push_back( instanceA1 );
+    myVec.push_back( instanceA2 );
+    myVec.push_back( instanceA3 );
+//    myVec.erase( myVec.begin() );
+    for( auto it = myVec.begin(); it != myVec.end(); ) {
+        if( ( *it ).IntegerA == 2 ) {
+            it = myVec.erase( it );
+        } else {
+            ++it;
+        }
+    }
+
+    for( auto &v : myVec ) {
+        std::cout << "MatrixA" << std::endl;
+        v.MatrixA.print();
+    }
 }

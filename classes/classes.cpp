@@ -10,5 +10,5 @@
 
 std::string GetVersion()
 {
-    return "25.05.2022_v01_Develop";
+    return "25.05.2022_Develop";
 }
